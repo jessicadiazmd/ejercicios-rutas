@@ -139,7 +139,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Peliculas peliculas={peliculas} />} />
         {peliculas.map((pelicula) => {
-          console.log("/" + pelicula.titulo);
           return (
             <Route
               path={"/" + pelicula.titulo.replace(/ |[áéíóú]/g, "-")}
