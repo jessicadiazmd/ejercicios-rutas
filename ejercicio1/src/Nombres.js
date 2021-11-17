@@ -1,8 +1,6 @@
-import { useState } from "react";
-
 function Nombres() {
-  let [nombres, setNombres] = useState(["Pepe", "Ana", "Juan"]);
-  let mostrarNombres = nombres.map(function (nombre) {
+  let nombres = ["Pepe", "Ana", "Juan"];
+  let mostrarNombres = nombres.map((nombre) => {
     return <li>{nombre}</li>;
   });
 

@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import Peliculas from "./Peliculas.js";
-import Pelicula from "./Pelicula.js";
 
 function App() {
   let [peliculas, setPeliculas] = useState([
@@ -90,6 +88,39 @@ function App() {
     },
   ]);
 
+  function Pelicula({ pelicula, full }) {
+    if (full) {
+      return (
+        <div>
+          <Link to={"/" + pelicula.titulo.replace(/ |[áéíóú]/g, "-")}>
+            <h2>{pelicula.titulo}</h2>
+          </Link>
+          <img
+            style={{ width: "250px" }}
+            src={pelicula.cartel}
+            alt={pelicula.titulo}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div style={{ width: "50%" }}>
+          <p>{pelicula.sinopsis}</p>
+        </div>
+      );
+    }
+  }
+
+  function Peliculas(props) {
+    return props.peliculas.map((pelicula, index) => {
+      return (
+        <>
+          <Pelicula pelicula={pelicula} key={index} full={true} />
+        </>
+      );
+    });
+  }
+
   function Cabecera() {
     return (
       <header>
@@ -107,16 +138,15 @@ function App() {
       <Cabecera />
       <Routes>
         <Route path="/" element={<Peliculas peliculas={peliculas} />} />
-        <Route
-          path={"/" + peliculas.titulo}
-          element={
-            <Pelicula
-              peliculas={peliculas}
-              setPeliculas={setPeliculas}
-              key={peliculas.titulo}
+        {peliculas.map((pelicula) => {
+          console.log("/" + pelicula.titulo);
+          return (
+            <Route
+              path={"/" + pelicula.titulo.replace(/ |[áéíóú]/g, "-")}
+              element={<Pelicula pelicula={pelicula} full={false} />}
             />
-          }
-        />
+          );
+        })}
       </Routes>
     </BrowserRouter>
   );

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Cabecera from "./Cabecera.js";
 import Gatos from "./Gatos.js";
