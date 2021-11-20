@@ -1,12 +1,27 @@
+import { Link } from "react-router-dom";
+
 function Jugador(props) {
-  return (
-    <div>
-      <h1>{props.jugador.nombre}</h1>
-      <p>Edad:{props.jugador.edad}</p>
-      <p>Posición:{props.jugador.pos}</p>
-      <p>Estatura:{props.jugador.estatura}</p>
-    </div>
-  );
+  if (props.full) {
+    return (
+      <div key={props.nombre}>
+        <h3>Nombre: {props.nombre}</h3>
+        <p>Posicion: {props.pos}</p>
+        <p>Edad: {props.edad}</p>
+        <p>Estatura: {props.estatura}</p>
+        <Link to="/equipo">
+          <p>Volver al equipo</p>
+        </Link>
+      </div>
+    );
+  } else {
+    return (
+      <div key={props.index}>
+        <Link to={"/" + props.nombre.replace(/ |[áéíóú]/g, "-")}>
+          <h1>{props.nombre}</h1>
+        </Link>
+      </div>
+    );
+  }
 }
 
 export default Jugador;

@@ -1,12 +1,10 @@
-import "./App.css";
-import { useState } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Cabecera from "./Cabecera.js";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Jugador from "./Jugador.js";
 import Equipo from "./Equipo.js";
 
 function App() {
-  let [jugadores, setJugadores] = useState([
+  let jugadores = [
     {
       nombre: "Jugador 1",
       pos: "Base",
@@ -37,19 +35,31 @@ function App() {
       edad: "30",
       estatura: "2,02 m",
     },
-  ]);
+  ];
+
+  const rutas = jugadores.map((jugador, index) => {
+    return (
+      <Route
+        path={"/" + jugador.nombre.replace(/ |[áéíóú]/g, "-")}
+        element={
+          <Jugador
+            key={index}
+            full={true}
+            nombre={jugador.nombre}
+            posicion={jugador.pos}
+            edad={jugador.edad}
+            estatura={jugador.estatura}
+          />
+        }
+      />
+    );
+  });
 
   return (
     <BrowserRouter>
-      <Cabecera jugadores={jugadores} />
-
       <Routes>
         <Route path="/equipo" element={<Equipo equipo={jugadores} />} />
-        <Route path="/jugador1" element={<Jugador jugador={jugadores[0]} />} />
-        <Route path="/jugador2" element={<Jugador jugador={jugadores[1]} />} />
-        <Route path="/jugador3" element={<Jugador jugador={jugadores[2]} />} />
-        <Route path="/jugador4" element={<Jugador jugador={jugadores[3]} />} />
-        <Route path="/jugador5" element={<Jugador jugador={jugadores[4]} />} />
+        {rutas}
       </Routes>
     </BrowserRouter>
   );
